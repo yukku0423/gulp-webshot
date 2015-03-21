@@ -41,6 +41,16 @@ gulp shot
 
 ## API
 
+### gulp-webshot(options)
+
+#### options.incremental
+
+Type: `boolean`
+
+Save Screenshot to incremental named dir if this option is `true`.
+
+
+
 ### webshot(options)
 
 #### options.dest
