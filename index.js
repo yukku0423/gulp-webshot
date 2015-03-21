@@ -2,6 +2,7 @@ var gutil = require('gulp-util');
 var through = require('through2');
 var webshot = require('webshot');
 var path = require("path");
+var fs = require("fs");
 var connect = require("connect");
 var serveStatic = require('serve-static');
 
@@ -18,6 +19,24 @@ module.exports = function(opt){
     app.use(serveStatic(opt.root));
 
     var server = app.listen(opt.p);
+
+    if( opt.incremental ){
+      // IMPROVE: be better code
+      var saveDir = opt.dest.replace(/\/$/, '');
+
+      fs.readdir(saveDir, function(err, dirs){
+        if (err && err.code === 'ENOENT'){
+          opt.dest = path.join(saveDir, '0');
+        } else if (dirs.length > 0){
+          dirs = dirs.filter(function(dir){
+            return /^[1-9]?\d+/.test(dir);
+          })
+          .sort(function(a, b){ return (~~a > ~~b) ? 1 : -1; })
+          .reverse();
+          opt.dest = path.join(saveDir, (~~dirs[0] + 1).toString());
+        }
+      })
+    }
 
     return through.obj(function (file, enc, cb) {
 
