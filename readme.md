@@ -68,8 +68,11 @@ Type: `object`
     height: `int`
 
 
+#### options.format
 
+Type: `string`
 
+    png, jpg, pdf
 
 more options checkout [webshot options](https://github.com/brenden/node-webshot#options).
 

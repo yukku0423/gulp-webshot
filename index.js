@@ -36,6 +36,7 @@ module.exports = function(opt) {
       opt.dest = 'snapshot/';
     }
 
+    opt.format = opt.format || 'png';
 
     if (file.isNull()) {
       this.push(file);
@@ -58,7 +59,7 @@ module.exports = function(opt) {
 
     var parsep = path.basename(file.relative);
     var name = path.basename(file.relative, '.html');
-    var filename = path.join(opt.dest, basepath, name + '.png');
+    var filename = path.join(opt.dest, basepath, name + '.' + opt.format);
     var relativeFilePath = path.join(path.sep, basepath, parsep);
     var urlPath = url.resolve('http://localhost:' + opt.p, relativeFilePath);
 
